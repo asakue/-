@@ -1,0 +1,227 @@
+/* Основные переменные */
+:root {
+    /* Светлая тема (по умолчанию) */
+    --primary: #2c3e50;
+    --secondary: #3498db;
+    --accent: #e74c3c;
+    --bg: #f8f9fa;
+    --text: #2d3436;
+    --surface: #ffffff;
+    --border: #e0e0e0;
+    --hover-bg: rgba(0, 0, 0, 0.05);
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* Темная тема */
+[data-theme="dark"] {
+    --primary: #64B5F6;
+    --secondary: #81C784;
+    --accent: #FF8A80;
+    --bg: #121212;
+    --text: #E0E0E0;
+    --surface: #1E1E1E;
+    --border: #373737;
+    --hover-bg: rgba(255, 255, 255, 0.05);
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Базовые стили */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    transition: background 0.3s ease, color 0.2s ease, border 0.3s ease;
+}
+
+body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    min-height: 100vh;
+    padding: 1rem;
+}
+
+/* Переключатель темы */
+.theme-switch {
+    position: fixed;
+    top: 1rem;
+    right: 1rem;
+    z-index: 1000;
+}
+
+.toggle-label {
+    display: block;
+    width: 60px;
+    height: 30px;
+    background: var(--surface);
+    border-radius: 15px;
+    cursor: pointer;
+    box-shadow: var(--shadow);
+    position: relative;
+}
+
+.toggle-handle {
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 24px;
+    height: 24px;
+    background: var(--primary);
+    border-radius: 50%;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.toggle-label i {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 14px;
+    z-index: 1;
+}
+
+.fa-sun { left: 8px; color: #f1c40f; }
+.fa-moon { right: 8px; color: #E0E0E0; }
+
+.toggle-checkbox:checked + .toggle-label .toggle-handle {
+    transform: translateX(30px);
+}
+
+/* Контейнер */
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    background: var(--surface);
+    border-radius: 1rem;
+    box-shadow: var(--shadow);
+    padding: 2rem;
+    backdrop-filter: blur(8px);
+}
+
+/* Элементы управления */
+.controls {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.input-group {
+    position: relative;
+}
+
+.input-icon {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--secondary);
+    z-index: 1;
+}
+
+input, select {
+    width: 100%;
+    padding: 1rem 1rem 1rem 3rem;
+    background: var(--bg);
+    border: 2px solid var(--border);
+    border-radius: 0.8rem;
+    color: var(--text);
+    font-size: 1rem;
+}
+
+button {
+    background: var(--secondary);
+    color: white;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 0.8rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: filter 0.2s ease;
+}
+
+button:hover {
+    filter: brightness(1.1);
+}
+
+/* Таблица расписания */
+.schedule-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--surface);
+    margin: 2rem 0;
+    border-radius: 0.8rem;
+    overflow: hidden;
+}
+
+.schedule-table th {
+    background: var(--primary);
+    color: white;
+    padding: 1.2rem;
+    text-align: left;
+}
+
+.schedule-table td {
+    padding: 1rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.schedule-table tr:last-child td {
+    border-bottom: none;
+}
+
+.schedule-table tr:hover {
+    background: var(--hover-bg);
+}
+
+.auditory {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.3rem 0.8rem;
+    border-radius: 1rem;
+    background: rgba(var(--secondary-rgb), 0.1);
+    color: var(--secondary);
+}
+
+/* Сообщения */
+.loading {
+    text-align: center;
+    padding: 2rem;
+    color: var(--secondary);
+    display: none;
+}
+
+.error {
+    color: var(--accent);
+    padding: 1rem;
+    background: rgba(231, 76, 60, 0.1);
+    border-radius: 0.8rem;
+    margin: 1rem 0;
+    display: none;
+}
+/* Адаптивность */
+@media (max-width: 768px) {
+    .container {
+        padding: 1.5rem;
+    }
+    
+    .title {
+        font-size: 2rem;
+    }
+    
+    .controls {
+        grid-template-columns: 1fr;
+    }
+    
+    .schedule-table {
+        font-size: 0.9rem;
+    }
+    
+    .schedule-table th,
+    .schedule-table td {
+        padding: 0.8rem;
+    }
+}

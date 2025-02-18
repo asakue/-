@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <title>Расписание ДГТУ v0.0.1</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Theme Toggle -->
+    <div class="theme-switch">
+        <input type="checkbox" id="themeToggle" class="toggle-checkbox">
+        <label for="themeToggle" class="toggle-label">
+            <i class="fas fa-sun"></i>
+            <i class="fas fa-moon"></i>
+            <span class="toggle-handle"></span>
+        </label>
+    </div>
+
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <h1 class="title">
+                <i class="fas fa-calendar-alt"></i>
+                Расписание ДГТУ
+            </h1>
+        </header>
+
+        <!-- Controls -->
+        <div class="controls">
+            <div class="input-group">
+                <i class="fas fa-search input-icon"></i>
+                <input type="text" id="searchInput" placeholder="Поиск группы...">
+            </div>
+
+            <div class="input-group">
+                <i class="fas fa-users input-icon"></i>
+                <select id="groupSelect">
+                    <option value="">Выберите группу</option>
+                </select>
+            </div>
+
+            <div class="input-group">
+                <i class="fas fa-calendar-day input-icon"></i>
+                <input type="date" id="datePicker">
+            </div>
+
+            <button id="viewScheduleButton">
+                <i class="fas fa-eye"></i>
+                Показать расписание
+            </button>
+        </div>
+
+        <!-- Status Indicators -->
+        <div class="loading" id="loading">
+            <i class="fas fa-spinner fa-spin"></i> Загрузка...
+        </div>
+        <div class="error" id="error"></div>
+
+        <!-- Schedule Container -->
+        <div id="schedule"></div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="version">v0.0.1</div>
+            <div class="copyright">© 2024 Расписание ДГТУ</div>
+        </footer>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
