@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Менеджер Задач - управление задачами и заметками</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/calendar.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Raleway:wght@700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <header class="app-header">
+            <div class="app-header-container">
+                <div class="header-left">
+                    <h1><span class="app-logo-container"><img src="img/app-logo.svg" alt="логотип" class="app-logo"></span>Менеджер Задач</h1>
+                    <div class="header-slogan">Упорядочивайте свою жизнь легко</div>
+                </div>
+            </div>
+            <div class="search-container">
+                <input type="text" id="search-input" placeholder="Поиск задач и заметок...">
+                <button id="search-button"><i class="fas fa-search"></i></button>
+            </div>
+            <div class="tabs">
+                <button class="tab-button active" data-tab="tasks">Задачи</button>
+                <button class="tab-button" data-tab="notes">Заметки</button>
+                <button class="tab-button" data-tab="calendar">Календарь</button>
+            </div>
+        </header>
+
+        <main class="app-content">
+            <!-- Секция задач -->
+            <section id="tasks-section" class="content-section active">
+                <div class="control-panel">
+                    <button id="add-task-button" class="primary-button">
+                        <i class="fas fa-plus"></i> Новая задача
+                    </button>
+                    <div class="filter-container">
+                        <select id="filter-tasks">
+                            <option value="all">Все задачи</option>
+                            <option value="active">Активные</option>
+                            <option value="completed">Завершенные</option>
+                        </select>
+                        <select id="sort-tasks">
+                            <option value="date-desc">Сначала новые</option>
+                            <option value="date-asc">Сначала старые</option>
+                            <option value="priority-desc">По приоритету (высокий-низкий)</option>
+                            <option value="priority-asc">По приоритету (низкий-высокий)</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="tasks-list" class="items-list"></div>
+            </section>
+
+            <!-- Секция заметок -->
+            <section id="notes-section" class="content-section">
+                <div class="control-panel">
+                    <button id="add-note-button" class="primary-button">
+                        <i class="fas fa-plus"></i> Новая заметка
+                    </button>
+                    <div class="filter-container">
+                        <select id="sort-notes">
+                            <option value="date-desc">Сначала новые</option>
+                            <option value="date-asc">Сначала старые</option>
+                            <option value="title-asc">По заголовку (А-Я)</option>
+                            <option value="title-desc">По заголовку (Я-А)</option>
+                        </select>
+                    </div>
+                </div>
+                <div id="notes-list" class="items-list notes-grid"></div>
+            </section>
+
+            <!-- Секция календаря -->
+            <section id="calendar-section" class="content-section">
+                <div class="calendar-wrapper">
+                    <div class="calendar-header">
+                        <button id="prev-month" class="calendar-nav-button"><i class="fas fa-chevron-left"></i></button>
+                        <h2 id="current-month">Апрель 2025</h2>
+                        <button id="next-month" class="calendar-nav-button"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                    <div class="weekdays">
+                        <div>Пн</div>
+                        <div>Вт</div>
+                        <div>Ср</div>
+                        <div>Чт</div>
+                        <div>Пт</div>
+                        <div>Сб</div>
+                        <div>Вс</div>
+                    </div>
+                    <div id="calendar-days" class="calendar-days"></div>
+                    <div class="calendar-tasks">
+                        <h3>Задачи на <span id="selected-date">31 марта 2025</span></h3>
+                        <div id="day-tasks" class="day-tasks-list"></div>
+                        <button id="add-calendar-task" class="primary-button">
+                            <i class="fas fa-plus"></i> Добавить задачу
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Модальное окно для задач -->
+        <div id="task-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <h2 id="task-modal-title">Новая задача</h2>
+                <form id="task-form">
+                    <div class="form-group">
+                        <label for="task-title">Название задачи:</label>
+                        <input type="text" id="task-title" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="task-description">Описание:</label>
+                        <textarea id="task-description"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="task-priority">Приоритет:</label>
+                        <select id="task-priority">
+                            <option value="low">Низкий</option>
+                            <option value="medium" selected>Средний</option>
+                            <option value="high">Высокий</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="task-due-date">Срок выполнения:</label>
+                        <input type="date" id="task-due-date">
+                    </div>
+                    <input type="hidden" id="task-id">
+                    <div class="modal-buttons">
+                        <button type="button" id="cancel-task" class="secondary-button">Отмена</button>
+                        <button type="submit" class="primary-button">Сохранить</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Модальное окно для заметок -->
+        <div id="note-modal" class="modal">
+            <div class="modal-content">
+                <span class="close-modal">&times;</span>
+                <h2 id="note-modal-title">Новая заметка</h2>
+                <form id="note-form">
+                    <div class="form-group">
+                        <label for="note-title">Заголовок:</label>
+                        <input type="text" id="note-title" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="note-content">Содержание:</label>
+                        <textarea id="note-content" rows="6" required></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="note-color">Цвет заметки:</label>
+                        <select id="note-color">
+                            <option value="#ffffff">Белый</option>
+                            <option value="#ffcccb">Розовый</option>
+                            <option value="#ffffcc">Желтый</option>
+                            <option value="#ccffcc">Зеленый</option>
+                            <option value="#e6f2ff">Голубой</option>
+                            <option value="#e6ccff">Фиолетовый</option>
+                        </select>
+                    </div>
+                    <input type="hidden" id="note-id">
+                    <div class="modal-buttons">
+                        <button type="button" id="cancel-note" class="secondary-button">Отмена</button>
+                        <button type="submit" class="primary-button">Сохранить</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Подтверждение удаления -->
+        <div id="confirm-delete-modal" class="modal">
+            <div class="modal-content">
+                <h2>Подтверждение удаления</h2>
+                <p id="confirm-delete-message">Вы уверены, что хотите удалить этот элемент?</p>
+                <div class="modal-buttons">
+                    <button id="cancel-delete" class="secondary-button">Отмена</button>
+                    <button id="confirm-delete" class="danger-button">Удалить</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="app-footer">
+        <div class="footer-content">
+            <p class="version">МенеджерЗадач v1.0</p>
+            <div class="developer-info">
+                <span>by</span>
+                <a href="https://github.com/asakue" target="_blank" class="developer-link">
+                    <i class="fab fa-github"></i>
+                    <span>asakue</span>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/utils.js"></script>
+    <script src="js/tasks.js"></script>
+    <script src="js/notes.js"></script>
+    <script src="js/calendar.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
